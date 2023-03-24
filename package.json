@@ -1,0 +1,23 @@
+{
+  "name": "finalizedproject",
+  "version": "1.0.0",
+  "description": "this is the finalized artpage project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "server": "nodemon server.js"
+  },
+  "author": "William Silverman",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "git": "^0.1.5",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
