@@ -1,0 +1,11 @@
+This is my skeleton for a fullstack application for the mern stack. 
+I have yet to work too much with mongo db, but this bit here will allow 
+uploading to cyclic and getting things going. 
+
+
+1. after adding changes to the react js application, "npm run build" and replace the 
+build folder in here with the build folder in this folder. 
+2. make sure that the react js project calls the correct endpoints. 
+3. upload this to the github repository, and then connect to cyclic and upload. 
+
+
