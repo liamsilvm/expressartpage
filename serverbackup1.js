@@ -17,21 +17,10 @@ const app = express();
 // app.use(bodyParser.json());
 
 app.use(useragent.express()); 
-
-
-
-
-
+app.use(express.static(path.join(__dirname, 'build'))); 
 app.get('/', (req,res) => { 
-  let folder = ''; 
-  if(req.useragent.isMobile){ 
-    folder = 'mobile'; 
-  }else{ 
-    folder = 'desktop'; 
-  }
-  app.use(express.static(path.join(__dirname, 'build', folder))); 
-    res.sendFile(path.join(__dirname, 'build', folder, 'index.html')); 
-}); 
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 
 //now we need a mongo db uri (database)
