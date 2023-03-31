@@ -9,3 +9,8 @@ build folder in here with the build folder in this folder.
 3. upload this to the github repository, and then connect to cyclic and upload. 
 
 
+FOR UPLOADING TO GITHUB: 
+1. git add .
+2. git commit -m "update to project" 
+3. git push -u -f origin main
+

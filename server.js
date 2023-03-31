@@ -49,16 +49,27 @@ app.use('/api/items', items);
 
 //this is for getting gallery images from imgur
 let imgur = getImgurAlbumImages('nQTfJ41', 'ffcfd436adb20cc')
-app.get('/imgurimages', async (req, res) => {
-    try {
-      const imgur = await getImgurAlbumImages('nQTfJ41', 'ffcfd436adb20cc');
-      res.json({images: imgur}); 
-      
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error retrieving Imgur images');
-    }
-  });
+app.get('/imgurimages/paintings', async (req, res) => {
+  try {
+    const imgur = await getImgurAlbumImages('nQTfJ41', 'ffcfd436adb20cc');
+    res.json({images: imgur}); 
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving Imgur images');
+  }
+});
+
+app.get('/imgurimages/sketches', async (req, res) => {
+  try {
+    const imgur = await getImgurAlbumImages('hRSOzlA', 'ffcfd436adb20cc', 'hRSOzlA');
+    res.json({images: imgur}); 
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving Imgur images');
+  }
+});
   
 app.get('/test', (req,res) => { 
     res.send(`server is running `); 
