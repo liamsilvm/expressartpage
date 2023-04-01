@@ -1,5 +1,3 @@
-//this is where all of the routes will go. 
-
 const express = require('express'); 
 const router = express.Router(); 
 
@@ -27,7 +25,9 @@ router.get('/', (req,res) => {
 router.post('/', (req,res) => { 
     //constrcut an object to insert into the databse 
     const newItem = new Item({
-        name: req.body.name
+        name: req.body.name, 
+        comment: req.body.comment, 
+        image: req.body.image
     }); 
 
     newItem.save().then(item => res.json(item)); 
