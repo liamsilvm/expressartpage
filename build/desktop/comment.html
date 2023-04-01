@@ -5,29 +5,129 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{ 
+            background-color: black; 
+            color: white; 
+        }
+        input{ 
+            background-color: gray; 
+            border: 1px solid rgb(146, 146, 224); 
+
+        }
+        button{ 
+            color:rgb(41, 41, 70); 
+            background-color: rgb(146, 146, 224);
+        }
+    </style>
 </head>
 <body>
     <h1>This is the comment window</h1>
     <div id = 'imageContainer'> 
         <img id = 'image'>
         </div>
-    
-        <form> 
+        <form id = 'form'> 
             <label for="fname">leave a comment</label>
             <input type = 'text' id = 'fname' name = 'fname'><br><br>
 
+            <label for="fname2">name</label>
+            <input type = 'text' id = 'fname2' name = 'fname2'><br><br>
             </form>
+            <button id = 'submitButton'>submit</button>
+        <div id = "comments-section"> 
+            
+
+            
+
+        </div>
+       
+
     <script> 
 
         const imageContainer = document.getElementById('imageContainer'); 
         const image = document.getElementById('image'); 
+        const commentSection = document.getElementById('comments-section'); 
 
         const urlParams = new URLSearchParams(window.location.search); 
         const imageSrc = urlParams.get("image"); 
-        image.setAttribute('src', imageSrc); image.setAttribute('width', 500, 'height', 500)
+
+        const form = document.getElementById('form');
+
+        const commentBox = document.getElementById('fname'); 
+        const nameBox = document.getElementById('fname2'); 
+        const submitButton = document.getElementById('submitButton'); 
+
+        image.setAttribute('src', imageSrc); image.setAttribute('width', 500, 'height', 500);
         
         console.log(imageSrc); 
-        window.open(imageSrc); 
+        // window.open(imageSrc); 
+        function addComment(name,comment){ 
+            let newP = document.createElement('p'); 
+            newP.innerHTML = `${name}:${comment}`; 
+            commentSection.appendChild(newP); 
+        }
+        function postComment(name,comment, image){ 
+            fetch('/api/items', { 
+                method: 'POST', 
+                headers: { 
+                    'Content-Type': 'application/json'
+                }, 
+                body: JSON.stringify({
+                    name: name, 
+                    comment: comment, 
+                    image: image
+                })
+            })
+            .then((res) => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error)); 
+        }
+
+        function loadComments(){ 
+            commentSection.innerHTML = ''; 
+            fetch('/api/items')
+            .then((data) => data.json())
+            .then((data) => data.forEach((data) =>{ 
+            data.image === imageSrc ? addComment(data.name,data.comment) : null; 
+        })); 
+        }
+
+        //event listeners
+        let curComment = ''; 
+        let curName = ''; 
+        commentBox.addEventListener('input', (e) => { 
+            console.log(e.target.value); 
+            curComment = e.target.value; 
+        })
+        nameBox.addEventListener('input', (e) => { 
+            console.log(e.target.value); 
+            curName = e.target.value; 
+
+        })
+        submitButton.addEventListener('click', ()=> { 
+            if(curComment.length && curName.length > 0){ 
+                postComment(curName, curComment, imageSrc); 
+                commentBox.value = ''; nameBox.value = ''; 
+                loadComments(); 
+                curComment = ''; curName = ''; 
+
+            }else{ 
+                console.log('you need to have stuff here')
+            }
+        })
+        loadComments(); 
+        
+       
+        
+
+        form.addEventListener('submit', (e) => { 
+            e.preventDefault();
+
+            console.log('form has been submitted'); 
+            postComment(); 
+        })
+
+        
     </script>
 </body>
 </html>
