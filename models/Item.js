@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({ 
     name: {
         type: String, 
-        required: true
+        required: false
     }, 
     date: { 
         type: Date, 

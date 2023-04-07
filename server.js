@@ -5,21 +5,28 @@ const axios = require('axios');
 const path = require('path'); 
 const useragent = require('express-useragent'); 
 const {getImgurAlbumImages} = require('./api_calls/imgur'); 
-
-const items = require('./routes/api/items'); //any request that goes to api/items goes to this file
-
-
+const items = require('./routes/api/items');
 
 
 const app = express(); 
 
-//body parser middleware. 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());// body parser middleware. 
+//DB config 
+const db = require('./config/keys').mongoURI; 
+
 
 app.use(useragent.express()); 
 
 
 
+//Connect to mongo 
+mongoose
+.connect(db)
+.then(() => console.log('MongoDB Connected...'))
+.catch(err => console.log(err)); 
+
+//use routes 
+app.use('/api/items', items); 
 
 
 app.get('/', (req,res) => { 
@@ -36,16 +43,9 @@ app.get('/', (req,res) => {
 
 //now we need a mongo db uri (database)
 //trythis is the password
-//DB config 
-const db = require('./config/keys').mongoURI; 
 
-//Connect to mongo 
-mongoose
-.connect(db)
-.then(() => console.log('MongoDB Connected...'))
-.catch(err => console.log(err)); 
-//use routes 
-app.use('/api/items', items); 
+
+
 
 //this is for getting gallery images from imgur
 let imgur = getImgurAlbumImages('nQTfJ41', 'ffcfd436adb20cc')
