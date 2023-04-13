@@ -6,6 +6,8 @@ const path = require('path');
 const useragent = require('express-useragent'); 
 const {getImgurAlbumImages} = require('./api_calls/imgur'); 
 const items = require('./routes/api/items');
+const pages = require('./routes/api/websiteText'); 
+
 
 
 const app = express(); 
@@ -27,7 +29,7 @@ mongoose
 
 //use routes 
 app.use('/api/items', items); 
-
+app.use('/api/pages', pages); 
 
 app.get('/', (req,res) => { 
   let folder = ''; 
